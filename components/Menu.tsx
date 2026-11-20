@@ -1,48 +1,43 @@
 import Image from 'next/image';
+import { Reveal } from './motion';
+import { photo } from './Top';
 
-interface Food { name: string; photo: string; diet: 'veg' | 'nonveg' | 'egg'; protein: string; kcal: string; price: string }
+interface Dish { name: string; img: string; alt: string; protein: number; price: number; meta: string }
 
-const FOODS: readonly Food[] = [
-  { name: 'Chicken breast', photo: '/menu/tandoori.jpg', diet: 'nonveg', protein: '22.5 g', kcal: '120', price: '₹25' },
-  { name: 'Chicken thigh', photo: '/menu/chicken-bowl.jpg', diet: 'nonveg', protein: '19.7 g', kcal: '121', price: '₹22' },
-  { name: 'Mutton boneless', photo: '/menu/mutton.jpg', diet: 'nonveg', protein: '20.6 g', kcal: '109', price: '₹45' },
-  { name: 'Paneer tikka', photo: '/menu/paneer.jpg', diet: 'veg', protein: '18.1 g', kcal: '299', price: '₹30' },
-  { name: 'Soya chunks chaat', photo: '/menu/chana.jpg', diet: 'veg', protein: '17.0 g', kcal: '108', price: '₹10' },
-  { name: 'Eggs (bhurji)', photo: '/menu/omelette.jpg', diet: 'egg', protein: '6.3 g / egg', kcal: '72 / egg', price: '₹12 / egg' },
+const DISHES: readonly Dish[] = [
+  { name: 'Tandoori chicken plate', img: 'tandoori.jpg', alt: 'Tandoori chicken', protein: 52, price: 195, meta: '9.8 g / 100 kcal · weighed raw' },
+  { name: 'Chicken rice bowl', img: 'chicken-bowl.jpg', alt: 'Chicken rice bowl with chickpeas', protein: 56, price: 228, meta: '10.3 g / 100 kcal · weighed raw' },
+  { name: 'Seer fish fry, millet', img: 'fish.jpg', alt: 'Seer fish fry', protein: 49, price: 253, meta: '11.2 g / 100 kcal · weighed raw' },
+  { name: 'Paneer tikka wrap', img: 'paneer.jpg', alt: 'Paneer tikka', protein: 38, price: 185, meta: '6.1 g / 100 kcal · veg' },
+  { name: 'Mutton pepper fry', img: 'mutton.jpg', alt: 'Mutton coconut fry', protein: 50, price: 265, meta: '8.4 g / 100 kcal · weighed raw' },
+  { name: 'Masala egg wrap', img: 'omelette.jpg', alt: 'Masala omelette with parathas', protein: 26, price: 90, meta: '7.4 g / 100 kcal · egg' },
 ];
-
-const LABEL = { veg: 'Vegetarian', nonveg: 'Non-vegetarian', egg: 'Contains egg' } as const;
 
 export default function Menu() {
   return (
-    <section id="menu" style={{ background: 'var(--surface)' }}>
-      <div className="wrap">
-        <p className="eyebrow">The menu</p>
-        <h2>Protein, priced per gram</h2>
-        <p className="lede">Protein and energy per 100 g raw. Tap any item in the app for vitamins and minerals, with what each one does for you.</p>
-        <div className="grid three" style={{ marginTop: 40 }}>
-          {FOODS.map((f) => (
-            <article className="card food" key={f.name}>
-              <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${f.photo}`} alt={`${f.name}, cooked`} width={600} height={380} />
-              <div className="body">
-                <h3>
-                  <span className={`vegdot ${f.diet}`} role="img" aria-label={LABEL[f.diet]} />
-                  {f.name}
-                </h3>
-                <div className="meta">
-                  <span><b>{f.protein}</b> protein</span>
-                  <span>{f.kcal} kcal</span>
-                  <span>{f.price} per 50 g raw</span>
+    <div id="menu" className="section" style={{ paddingTop: 24, paddingBottom: 88 }}>
+      <Reveal className="head">
+        <span className="eyebrow">02 / TASTE FIRST</span>
+        <h2 className="h2">High protein that tastes like dinner.</h2>
+        <p className="lede">Char, masala, curry leaf. Every plate shows its protein, calories and price before you order, and you can change the grams.</p>
+      </Reveal>
+      <div className="grid-auto">
+        {DISHES.map((d, i) => (
+          <Reveal key={d.name} delay={0.05 + i * 0.07}>
+            <a className="dish" href="#waitlist">
+              <div className="ph"><Image src={photo(d.img)} alt={d.alt} width={600} height={420} /></div>
+              <div className="bd">
+                <b className="nm">{d.name}</b>
+                <div className="line">
+                  <span className="pr">{d.protein}<small> g protein</small></span>
+                  <b className="price">₹{d.price}</b>
                 </div>
+                <span className="meta">{d.meta}</span>
               </div>
-            </article>
-          ))}
-        </div>
-        <p className="note">
-          Menus differ by kitchen. Nutrition values are approximate and based on standard food-composition data. Cooking
-          fee ₹25 and delivery ₹25 per order. Not medical advice.
-        </p>
+            </a>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,28 +1,27 @@
+import { Reveal } from './motion';
+
 const ITEMS = [
-  ['Where do you deliver?', 'We are starting in Koramangala, BTM, HSR, Indiranagar, Domlur and Jayanagar. A kitchen only serves addresses it can reach in 15 minutes, and the app tells you straight away if yours is outside.'],
-  ['Who cooks the food?', 'Independent cloud kitchens that partner with Gramaste. We set the weigh-before-cook rule, check the weigh tickets, and own your experience, from your order to the delivery.'],
-  ['How do I know the protein is right?', 'Your raw food is weighed and the weigh ticket is attached to your order. Protein is calculated from raw weight, so cooking does not change the number.'],
-  ['What if my food is late?', 'The countdown shows the 15-minute promise. If it runs out, tap Help on the tracking screen and our team looks into that order.'],
-  ['Can I cancel an order?', 'Yes, until the kitchen accepts it. After that we have already started on your food.'],
-  ['Is Preeto a doctor?', 'No. Preeto helps you plan meals from the menu. She does not give medical advice or diagnose anything.'],
-  ['I run a kitchen or ride a bike. Can I join?', 'Yes. Pick that option on the form below and we will get in touch.'],
+  ['Are the grams raw or cooked?', 'Raw. Meat, fish and paneer are weighed on a kitchen scale before they hit the pan, and your macros are worked out from that weight. Your order carries a weigh ticket as proof.'],
+  ['Where do the nutrition numbers come from?', 'Standard food-composition data, matched per ingredient and scaled to your grams. Treat them as a close, honest estimate: cooking lowers some vitamins.'],
+  ['I have never planned a diet. Can Preeto do it?', 'Yes. Answer a few questions and it proposes every meal, date by date. You review each day, add all or some to your basket, and edit later. It offers suggestions, not medical advice.'],
+  ['How do I cancel a plan?', 'One tap in the Plans tab. Meals already locked are delivered; 70% of the unused amount is refunded in 5 to 7 working days.'],
+  ['Where do you deliver?', 'Koramangala, Bengaluru first. Each kitchen only serves the streets it can reach quickly, so your food is cooked after you order and arrives fast. The app tells you before you order if your address is out of range.'],
 ] as const;
 
 export default function Faq() {
   return (
-    <section id="faq" style={{ background: 'var(--surface)' }}>
-      <div className="wrap" style={{ maxWidth: 820 }}>
-        <p className="eyebrow">Questions</p>
-        <h2>Good to know</h2>
-        <div style={{ marginTop: 28 }}>
-          {ITEMS.map(([q, a]) => (
-            <details key={q}>
+    <div id="faq" className="faq-band">
+      <div className="faq">
+        <h2>Questions</h2>
+        {ITEMS.map(([q, a], i) => (
+          <Reveal key={q} delay={i * 0.06}>
+            <details>
               <summary>{q}</summary>
               <p>{a}</p>
             </details>
-          ))}
-        </div>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

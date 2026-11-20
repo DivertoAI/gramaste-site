@@ -1,26 +1,59 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { CountUp, Reveal, useInView } from './motion';
+
+/** Raw against cooked: the weight drops in the pan, the protein does not. */
 export default function Proof() {
+  const [ref, seen] = useInView<HTMLDivElement>(0.4);
+  const [cooked, setCooked] = useState(200);
+
+  useEffect(() => {
+    if (!seen) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCooked(150);
+      return;
+    }
+    const t = setTimeout(() => {
+      const start = performance.now();
+      let raf = 0;
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / 1600);
+        setCooked(200 - 50 * p);
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, 700);
+    return () => clearTimeout(t);
+  }, [seen]);
+
   return (
-    <section id="proof" style={{ background: 'var(--surface)' }}>
-      <div className="wrap split">
-        <div>
-          <p className="eyebrow">The problem we fix</p>
-          <h2>“200 g chicken” should mean 200 g</h2>
-          <p className="lede">
-            Most gym-food apps give you a macro number and ask you to trust it. Portions shrink, cooking water changes
-            the weight, and your tracker is off by the end of the week. We weigh the raw food first, show you the
-            ticket, and price by the gram, so what you log is what you ate.
-          </p>
-          <p className="note">Protein figures come from raw weight and standard nutrition data. Cooked weight is never used.</p>
-        </div>
-        <div className="ticket" role="img" aria-label="Example weigh ticket: chicken breast, 200 grams raw, 45 grams protein">
-          <div className="row"><span>WEIGH TICKET</span><span>#1042</span></div>
-          <div className="row"><span>Item</span><span>Chicken breast</span></div>
-          <div className="row"><span>Ordered</span><span>200 g raw</span></div>
-          <div className="row"><span>Weighed</span><span><b>201.4 g</b> ✓</span></div>
-          <div className="row"><span>Protein</span><span><b>45 g</b></span></div>
-          <div className="row"><span>Photo</span><span>attached</span></div>
-        </div>
+    <div id="proof" className="section">
+      <Reveal className="head">
+        <span className="eyebrow">01 / WHY THE NUMBER IS REAL</span>
+        <h2 className="h2">Same protein. Different scale.</h2>
+        <p className="lede">
+          Chicken loses about a quarter of its weight cooking. Count the cooked grams against raw data and you undercount protein by 25 to 30 percent. We weigh raw, and we show you the proof.
+        </p>
+      </Reveal>
+      <div className="grid-auto" ref={ref}>
+        <Reveal delay={0.05} className="tile dark ink">
+          <span className="k">BEFORE THE PAN</span>
+          <span className="v y"><CountUp to={200} suffix=" g" /></span>
+          <span style={{ fontSize: 17 }}>45 g protein</span>
+        </Reveal>
+        <Reveal delay={0.15} className="tile dark ink">
+          <span className="k">AFTER THE PAN</span>
+          <span className="v">{Math.round(cooked)} g</span>
+          <div className="proof-drop" aria-hidden="true"><i style={{ width: `${(cooked / 200) * 100}%` }} /></div>
+          <span style={{ fontSize: 17 }}>Still 45 g protein. Only water left.</span>
+        </Reveal>
+        <Reveal delay={0.25} className="tile cream">
+          <span className="k" style={{ color: 'var(--faint)' }}>OUR RULE</span>
+          <span className="rule">We weigh it raw, so the number is real.</span>
+          <span style={{ fontSize: 15, color: 'var(--sub)' }}>Every order carries a weigh ticket: the grams and the time your portion was weighed on the scale.</span>
+        </Reveal>
       </div>
-    </section>
+    </div>
   );
 }
