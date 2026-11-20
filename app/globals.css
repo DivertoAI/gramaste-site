@@ -200,3 +200,52 @@ details p { margin-top:8px; font-size:16px; line-height:1.55; color:var(--sub); 
   .hero-rise > *, .float, .marquee, .scale-photo img, .scale-read::after, .meal, details p { animation:none !important; }
   .btn, .btn::after, .dish, .dish img, .plan, .day, .pill, .scale-card, .macro i { transition:none !important; }
 }
+
+/* ---- phones and small tablets ---- */
+@media (max-width: 900px) {
+  .hero { padding: 36px 0 52px; gap: 32px; }
+  .section { padding-top: 64px; }
+  .planner, .wl { padding-top: 64px; padding-bottom: 64px; gap: 32px; }
+  .faq { padding-top: 56px; padding-bottom: 56px; }
+}
+@media (max-width: 720px) {
+  .bar { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 4px 10px; padding: 14px 0 6px; }
+  .nav { grid-column: 1 / -1; order: 3; flex-wrap: nowrap; overflow-x: auto; gap: 22px; margin: 0 -24px; padding: 0 24px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; min-height: 40px; }
+  .bar .btn { padding: 10px 14px; font-size: 14px; }
+  .themebtn { padding: 0 12px; }
+  .hero h1 { font-size: clamp(50px, 15.5vw, 96px); }
+  .hero p.sub { font-size: 18px; }
+  .h2 { font-size: clamp(36px, 10.5vw, 64px); }
+  .lede, .planner .copy p { font-size: 17px; }
+  .tile { padding: 22px; }
+  .tile .v { font-size: 46px; }
+  .tile .rule { font-size: 34px; }
+  .receipt { padding: 22px 18px; font-size: 14px; }
+  .receipt .total { font-size: 20px; }
+  .leave b { font-size: 32px; }
+  .plan .off { font-size: 46px; }
+  .wl form, .wl .soon, .plan-card { padding: 20px; }
+  .days { gap: 4px; font-size: 11px; }
+  .day b { font-size: 14px; }
+  .meal { flex-direction: column; gap: 4px; }
+  .meal .m { white-space: normal; }
+  .scale-photo { height: 240px; }
+  .scale-read { font-size: 32px; }
+  .add-row { flex-direction: column; }
+  .footer .in { gap: 12px; }
+  .btn.big { padding: 14px 20px; font-size: 16px; }
+  .cta .btn { flex: 1 1 100%; }
+}
+@media (max-width: 380px) {
+  .wrap, .section, .pair, .planner, .wl, .faq, .footer .in { padding-left: 18px; padding-right: 18px; }
+  .nav { margin: 0 -18px; padding: 0 18px; }
+  .logo { font-size: 22px; }
+}
+@media (hover: none) {
+  .dish:hover, .plan:hover, .btn:hover, .day:hover, .pill:hover, .themebtn:hover { transform: none; box-shadow: none; }
+  .dish:hover img { transform: none; }
+}
+.n84 { font-size:clamp(60px,18vw,84px); }
+.n96 { font-size:clamp(68px,22vw,96px); }

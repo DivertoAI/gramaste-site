@@ -50,7 +50,7 @@ export function Top() {
                 </div>
                 <div className="card-meta"><span>RAW CHICKEN BREAST</span><LiveClock /></div>
                 <div className="big-num">
-                  <span className="n" style={{ fontSize: 84 }}><CountUp to={45} /></span>
+                  <span className="n n84"><CountUp to={45} /></span>
                   <span className="u">g PROTEIN · 10.1 g / 100 kcal</span>
                 </div>
               </Tilt>

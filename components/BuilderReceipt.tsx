@@ -40,7 +40,7 @@ export default function BuilderReceipt() {
       <Reveal className="tile dark ink" style={{ padding: 26, gap: 14 }}>
         <span className="k" style={{ letterSpacing: '.12em' }}>THE BUILDER</span>
         <div className="big-num">
-          <span className="n" style={{ fontSize: 96 }}><CountUp to={55} /></span>
+          <span className="n n96"><CountUp to={55} /></span>
           <span className="u">g PROTEIN · <CountUp to={542} /> kcal</span>
         </div>
         <div className="macro" aria-label="Protein, carbs and fat balance">
