@@ -1,0 +1,37 @@
+import type { Metadata, Viewport } from 'next';
+import { Archivo, IBM_Plex_Mono, Instrument_Sans } from 'next/font/google';
+import './globals.css';
+
+const display = Archivo({ subsets: ['latin'], weight: ['800'], variable: '--font-display', display: 'swap' });
+const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-mono', display: 'swap' });
+const body = Instrument_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
+
+const title = 'Gramaste: eat to the gram';
+const description =
+  'High-protein meals for Bengaluru gym-goers. Your raw food is weighed before cooking, and it reaches you within 15 minutes.';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  title,
+  description,
+  openGraph: { title, description, type: 'website', locale: 'en_IN', siteName: 'Gramaste' },
+  twitter: { card: 'summary_large_image', title, description },
+};
+
+export const viewport: Viewport = { themeColor: '#14110F', colorScheme: 'dark light' };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en-IN" className={`${display.variable} ${mono.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Applies the saved theme before first paint so there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('gramaste-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
